@@ -19,6 +19,14 @@ A point-of-sale system for a small sari-sari store, with separate **Admin** and 
 - Login at `/login`
 - Self-registration at `/register` — anyone can register as Cashier; registering as Admin additionally requires a secret setup code (see [Environment variables](#environment-variables))
 
+## Install as an app
+
+Open the deployed HTTPS site in Chrome on desktop or Android and select **Install app** on the login page or navigation bar when Chrome offers installation. You can also use Chrome's address-bar install icon or its install menu option. The button only appears when the browser makes installation available; already-installed apps do not show it.
+
+The installed app opens in its own window and uses the same login, sales, and inventory data as the website. An internet connection is still required for login and store operations. Installation does not enable offline sales.
+
+For local development, use `http://localhost:3000`. Installation requires HTTPS outside localhost; an ordinary HTTP LAN address will not qualify. Chrome may require some interaction with the page before offering installation.
+
 ## Tech stack
 
 - **Backend:** Node.js, Express
