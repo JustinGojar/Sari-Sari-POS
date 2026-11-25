@@ -21,7 +21,7 @@ A point-of-sale system for a small sari-sari store, with separate **Admin** and 
 
 ## Install as an app
 
-Open the deployed HTTPS site in Chrome on desktop or Android and select **Install app** on the login page or navigation bar when Chrome offers installation. You can also use Chrome's address-bar install icon or its install menu option. The button only appears when the browser makes installation available; already-installed apps do not show it.
+Open the deployed HTTPS site in Chrome on desktop or Android and use the browser's address-bar install icon or install menu option when available. Installation is managed through the browser; there are no install buttons on the login page or navigation bar.
 
 The installed app opens in its own window and uses the same login, sales, and inventory data as the website. An internet connection is still required for login and store operations. Installation does not enable offline sales.
 
