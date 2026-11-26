@@ -5,11 +5,18 @@
 
   <div class="card">
     <h2>Submit Inventory Report</h2>
+    <% if (products.length === 0) { %>
+      <p class="muted">No active products are available. Ask an administrator to add or activate a product in Products before submitting an inventory report.</p>
+    <% } %>
     <form method="POST" action="/pos/inventory/report" class="form-grid">
+      <label id="product-search-label" hidden>Search products
+        <input type="search" id="product-search" placeholder="Type a product name or barcode" aria-controls="inventory-product" autocomplete="off" />
+      </label>
       <label>Product
-        <select name="product_id" required>
+        <select id="inventory-product" name="product_id" required <%= products.length === 0 ? 'disabled' : '' %>>
+          <option value=""><%= products.length === 0 ? 'No products available' : 'Select a product' %></option>
           <% products.forEach(p => { %>
-            <option value="<%= p.id %>"><%= p.name %> (<%= p.stock_quantity %> <%= p.unit %> in stock)</option>
+            <option value="<%= p.id %>" data-search="<%= p.name %> <%= p.barcode || '' %>"><%= p.name %> (<%= p.stock_quantity %> <%= p.unit %> in stock)</option>
           <% }) %>
         </select>
       </label>
@@ -23,7 +30,8 @@
       </label>
       <label>Quantity <input type="number" name="quantity" min="1" required /></label>
       <label>Note <input type="text" name="note" placeholder="Optional remarks" /></label>
-      <button type="submit" class="btn btn-primary">Submit Report</button>
+      <p id="product-search-status" class="muted" role="status" hidden></p>
+      <button type="submit" class="btn btn-primary" <%= products.length === 0 ? 'disabled' : '' %>>Submit Report</button>
     </form>
   </div>
 
@@ -65,4 +73,5 @@
     <% } %>
   </div>
 </main>
+<script src="/js/inventory.js"></script>
 <%- include('../partials/foot') %>

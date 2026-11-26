@@ -130,7 +130,7 @@ async function submitReport(productId, type, quantityChange, note, userId) {
   const client = await getClient();
   try {
     await client.query('BEGIN');
-    const { rows } = await client.query('SELECT * FROM products WHERE id = $1 FOR UPDATE', [productId]);
+    const { rows } = await client.query('SELECT * FROM products WHERE id = $1 AND active = TRUE FOR UPDATE', [productId]);
     const product = rows[0];
     if (!product) throw new Error('Product not found.');
 
@@ -158,6 +158,9 @@ async function postInventoryReport(req, res) {
   const { product_id, type, quantity, note } = req.body;
   const qty = Number(quantity);
   try {
+    if (!Number.isSafeInteger(Number(product_id)) || Number(product_id) <= 0) {
+      throw new Error('Select a product from the list.');
+    }
     if (!Number.isFinite(qty) || qty === 0) throw new Error('Enter a non-zero quantity.');
     const signedQty = type === 'restock' ? Math.abs(qty) : -Math.abs(qty);
     await submitReport(Number(product_id), type, signedQty, note, req.session.user.id);
